@@ -3,7 +3,7 @@ import caffe
 from caffe_feature_extractor import CaffeFeatureExtractor
 
 def preprocess(image_path):
-	image = caffe.io.load(image_path, extractionNet)	# load the image
+	image = caffe.io.load_image(image_path, extractionNet)	# load the image
 	return np.asarray(extractionNet.transformer.preprocess("data",image)/255.)	# preprocess the image
 	
 def run_siamese(net, extractionNet, imageL_path, imageR_path):
@@ -18,7 +18,7 @@ def run_siamese(net, extractionNet, imageL_path, imageR_path):
 
 	# run the network:
 	net.blobs['data'].reshape(1,6,224,224)	# reshape input to make sure it matches size of the batch (in this example batch of size 1)
-	similarity_score = net.forward(data = network_input))["prob"].copy()[0][0]	# run the network and extract "prob" layer output
+	similarity_score = net.forward(data = network_input)["prob"].copy()[0][0]	# run the network and extract "prob" layer output
 	return similarity_score
 
 
